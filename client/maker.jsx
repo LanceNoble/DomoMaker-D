@@ -40,6 +40,20 @@ const DomoForm = (props) => {
     );
 }
 
+function DeleteButton({action, domoName, children}) {
+    function handleDelete() {
+        alert(`Deleting ${domoName}! D:`);
+        helper.hideError();
+        const name = domoName;
+        helper.sendDel(action, {name}, loadDomosFromServer);
+    }
+
+    return (
+        <button onClick={handleDelete}>
+            {children}
+        </button>
+    );
+}
 const DomoList = (props) => {
     if (props.domos.length === 0) {
         return (
@@ -56,6 +70,9 @@ const DomoList = (props) => {
                 <h3 className="domoName"> Name: {domo.name}</h3>
                 <h3 className="domoAge"> Age: {domo.age}</h3>
                 <h3 className="domoLevel"> Level: {domo.level}</h3>
+                <DeleteButton action="/deleteDomo" domoName={domo.name}>
+                    Delete Domo
+                </DeleteButton>
             </div>
         );
     });
